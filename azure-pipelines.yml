@@ -18,8 +18,8 @@ resources:
 - repo: self
 
 variables:
+  - group: 'ephemeral_envrionments_demo'
   tag: '$(Build.BuildId)'
-  group: 'ephemeral_envrionments_demo'
 
 stages:
 - stage: Build
