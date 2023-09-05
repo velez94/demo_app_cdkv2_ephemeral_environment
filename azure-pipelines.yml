@@ -20,7 +20,8 @@ resources:
 variables:
   - group: 'ephemeral_envrionments_demo'
 
-pool: DevSecOpsEphemeralEnvironments
+pool: 
+  name: DevSecOpsEphemeralEnvironments
 
 
 stages:
