@@ -19,7 +19,7 @@ resources:
 
 variables:
   - group: 'ephemeral_envrionments_demo'
-  tag: '$(Build.BuildId)'
+  - tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -44,7 +44,7 @@ stages:
         scriptType: 'inline'
         inlineScript: |      
         
-            echo Logging in to Amazon ECR...
+            echo Logging in to Amazon ECR...  $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION 
             aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
  
         displayName: 'ECRPush'
