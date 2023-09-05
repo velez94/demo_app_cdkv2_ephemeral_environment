@@ -2,6 +2,18 @@
 # Build a Docker image
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
+variables:
+- group: 'ephemeral_envrionments_demo'
+
+parameters:
+- name: ServiceConnection
+  type: string
+  default: EphemeralEnvDeployment
+
+- name: RegionName
+  type: string
+  default: us-east-2
+
 trigger:
 - main
 
@@ -27,10 +39,17 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-    - task: ECRPushImage@1
+    - task: AWSShellScript@1
       inputs:
-        awsCredentials: 'EphemeralEnvDeployment'
-        regionName: 'us-east-2'
-        imageSource: 'imagename'
-        repositoryName: 'complimentgeneralapi'
-        forceDockerNamingConventions: true
+        awsCredentials: ${{ parameters.ServiceConnection }}
+        regionName: ${{ parameters.RegionName }}
+        scriptType: 'inline'
+        inlineScript: |      
+        
+            echo Logging in to Amazon ECR...
+            aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+ 
+        displayName: 'ECRPush'
+      env:
+        AWS_ACCOUNT_ID: $(shared_account)
+        AWS_DEFAULT_REGION:  $(shared_account_region)
