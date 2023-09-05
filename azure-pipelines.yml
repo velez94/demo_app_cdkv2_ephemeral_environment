@@ -19,7 +19,7 @@ resources:
 
 variables:
   - group: 'ephemeral_envrionments_demo'
-  - tag: '$(Build.BuildId)'
+  
 
 stages:
 - stage: Build
@@ -36,7 +36,7 @@ stages:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
-          $(tag)
+          '$(Build.BuildId)'
     - task: AWSShellScript@1
       inputs:
         awsCredentials: ${{ parameters.ServiceConnection }}
