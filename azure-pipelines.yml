@@ -2,9 +2,6 @@
 # Build a Docker image
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
-variables:
-- group: 'ephemeral_envrionments_demo'
-
 parameters:
 - name: ServiceConnection
   type: string
@@ -22,6 +19,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
+  group: 'ephemeral_envrionments_demo'
 
 stages:
 - stage: Build
