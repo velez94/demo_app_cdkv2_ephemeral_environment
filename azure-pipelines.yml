@@ -46,9 +46,9 @@ stages:
         
             echo Logging in to Amazon ECR...  $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION 
             echo `aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com`
-            export DOCKERPASS=$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)
+            aws ecr get-login-password --region $AWS_DEFAULT_REGION > dockerpass
             # aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-            docker login --username AWS --password $DOCKERPASS $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+            cat dockerpass | docker login --username AWS --password --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
 
         displayName: 'ECRPush'
       env:
