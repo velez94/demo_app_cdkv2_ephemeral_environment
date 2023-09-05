@@ -20,9 +20,6 @@ resources:
 variables:
   - group: 'ephemeral_envrionments_demo'
 
-pool: 
-  name: DevSecOpsEphemeralEnvironments
-
 
 stages:
 - stage: Build
@@ -31,7 +28,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: ubuntu-latest
+      name: DevSecOpsEphemeralEnvironments
     steps:
     - task: Docker@2
       displayName: Build an image
