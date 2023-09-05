@@ -19,7 +19,9 @@ resources:
 
 variables:
   - group: 'ephemeral_envrionments_demo'
-  
+
+pool: DevSecOpsEphemeralEnvironments
+
 
 stages:
 - stage: Build
