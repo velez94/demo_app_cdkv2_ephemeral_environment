@@ -37,18 +37,7 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           '$(Build.BuildId)'
-      
-    - task: AWSCLI@1
-      inputs:
-        awsCredentials: 'EphemeralEnvDeployment'
-        regionName: 'us-east-2'
-        awsCommand: 'aws ecr'
-        awsSubCommand: 'get-login-password --region $AWS_DEFAULT_REGION'
-        awsArguments: '| docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com'
-        failOnStandardError: false
-      env:
-        AWS_ACCOUNT_ID: $(shared_account)
-        AWS_DEFAULT_REGION:  $(shared_account_region)
+  
     - task: AWSShellScript@1
       inputs:
         awsCredentials: ${{ parameters.ServiceConnection }}
@@ -58,7 +47,7 @@ stages:
         
             echo Logging in to Amazon ECR...  $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION 
             #echo `aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com`
-            #aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+            aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com 2>/dev/null
             #cat dockerpass | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
 
         displayName: 'ECRPush'
