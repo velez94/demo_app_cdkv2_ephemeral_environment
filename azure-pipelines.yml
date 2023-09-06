@@ -30,14 +30,6 @@ stages:
     pool:
       name: DevSecOpsEphemeralEnvironments
     steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          '$(Build.BuildId)'
-  
     - task: AWSShellScript@1
       inputs:
         awsCredentials: ${{ parameters.ServiceConnection }}
@@ -55,3 +47,12 @@ stages:
       env:
         AWS_ACCOUNT_ID: $(shared_account)
         AWS_DEFAULT_REGION:  $(shared_account_region)
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          '$(Build.BuildId)'
+  
+    
