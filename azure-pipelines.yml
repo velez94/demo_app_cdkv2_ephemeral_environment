@@ -45,8 +45,9 @@ stages:
         inlineScript: |      
         
             echo Logging in to Amazon ECR...  $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION 
-            docker tag complimentgeneralapi:$(Build.BuildId) $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/complimentgeneralapi:latest
-            docker push 155794986228.dkr.ecr.us-east-2.amazonaws.com/complimentgeneralapi:$(Build.BuildId)
+            TAG=$( git tag | tail -1)
+            docker tag complimentgeneralapi:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/complimentgeneralapi:latest
+            docker push 155794986228.dkr.ecr.us-east-2.amazonaws.com/complimentgeneralapi:$TAG
 
             #  aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com &
            
