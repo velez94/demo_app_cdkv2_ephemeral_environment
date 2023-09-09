@@ -49,7 +49,7 @@ stages:
             echo $TAG
             docker build -t complimentgeneralapi:$TAG .
             docker images
-            echo 'docker tag complimentgeneralapi:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/complimentgeneralapi:$TAG'
+            echo `complimentgeneralapi:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/complimentgeneralapi:$TAG`
             docker tag complimentgeneralapi:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/complimentgeneralapi:$TAG
             docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/complimentgeneralapi:$TAG
 
