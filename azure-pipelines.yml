@@ -30,13 +30,13 @@ stages:
     pool:
       name: DevSecOpsEphemeralEnvironments
     steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          '$(Build.BuildId)'
+#    - task: Docker@2
+#      displayName: Build an image
+#      inputs:
+#        command: build
+#        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+#        tags: |
+#          '$(Build.BuildId)'
     - task: AWSShellScript@1
       inputs:
         awsCredentials: ${{ parameters.ServiceConnection }}
@@ -46,6 +46,8 @@ stages:
         
             echo Logging in to Amazon ECR...  $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION 
             TAG=$( git tag | tail -1)
+            echo $TAG
+            docker build -t complimentgeneralapi:$TAG .
             docker images
             docker tag complimentgeneralapi:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/complimentgeneralapi:$TAG
             docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/complimentgeneralapi:$TAG
