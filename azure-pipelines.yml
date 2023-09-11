@@ -78,16 +78,15 @@ stages:
         AWS_DEFAULT_REGION:  $(shared_account_region)
 
 
-- template: templates/ci_cd.yaml@cdk_pipelines  # Template reference
+- template: templates/ci_cd.yaml@cdk_pipelines  # Template reference  
+  parameters:
+    Project: ephemeral_env_core
+    Language: typescript
+    Action: deploy
+    ServiceConnection: EphemeralEnvDeployment
+    CDKPath: infra
+    OnDemandTestEnv: true
+    Environment: test
     
-    parameters:
-      Project: ephemeral_env_core
-      Language: typescript
-      Action: deploy
-      ServiceConnection: EphemeralEnvDeployment
-      CDKPath: infra
-      OnDemandTestEnv: true
-      Environment: test
-      
       
     
