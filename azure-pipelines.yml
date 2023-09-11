@@ -83,7 +83,7 @@ stages:
     Language: typescript
     Action: deploy
     ServiceConnection: EphemeralEnvDeployment
-    PrivateRepository: true
+    PrivateRepository: false
     AzureCustomFeed: a3dfeb18-d0fc-4033-99ae-50b8d724527b
     CDKPath: infra
     OnDemandTestEnv: true
