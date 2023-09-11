@@ -1,0 +1,67 @@
+{
+  "environment": {
+    "account_id": "12345678910",
+    "name": "cdk-ecs-cluster-env",
+    "env":"dev",
+    "outputs": {
+      "ParentEnv": "cdk-ecs-env-demo",
+      "ECSClusterSecGrps": "[]",
+      "VPCId": "vpc-0a0de4874022239c2",
+      "ECSClusterSDNamespace": "ecs-cdk-demo.dev"
+    }
+  },
+  "service": {
+    "name": "cdk-svc-demo",
+    "repository_connection_arn": "",
+    "repository_id": "",
+    "branch_name": ""
+  },
+  "service_instances": [ 
+    {
+    "name": "webapi",
+    "inputs": {
+      "alb_port": 8080,
+      "port": 80,
+      "health_path": "/api/compliment",
+      "desired_count": 1,
+      "task_size": "x-small",
+      "image": "155794986228.dkr.ecr.us-east-2.amazonaws.com/complimentgeneralapi",
+      "load_balanced": true,
+      "load_balanced_public": true,
+      "service_discovery_name": "webapi"
+     
+    }
+  }
+],
+  "additonal_test_service_instances": [ 
+    
+  {
+    "name": "backend",
+    "inputs": {
+      "alb_port": 80,
+      "port": 80,
+      "desired_count": 1,
+      "task_size": "x-small",
+      "image": "public.ecr.aws/nginx/nginx:mainline-alpine",
+      "load_balanced": true,
+      "load_balanced_public": true,
+      "service_discovery_name": "backend"
+     
+    }
+  }, 
+  {
+    "name": "frontend",
+    "inputs": {
+      "alb_port": 3000,
+      "port": 3000,
+      "desired_count": 1,
+      "task_size": "x-small",
+      "image": "public.ecr.aws/aws-containers/ecsdemo-frontend:776fd50",
+      "load_balanced": true,
+      "load_balanced_public": true,
+      "service_discovery_name": "frontend"
+     
+    }
+  },
+]
+}

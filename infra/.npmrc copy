@@ -1,0 +1,3 @@
+@labvel:registry=https://pkgs.dev.azure.com/DevSecOpsLabvel/_packaging/PlarformEngieering/npm/registry/ 
+#registry=https://platform-engineering-155794986228.d.codeartifact.us-east-2.amazonaws.com/npm/Labvel-npm/                        
+always-auth=true
