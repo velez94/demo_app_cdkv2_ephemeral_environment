@@ -91,8 +91,8 @@ stages:
    
 
 - template: templates/ci_cd.yaml@cdk_pipelines  # Template reference 
-  dependsOn:
-    - Build
+  variables:
+    VERSION: $[ stageDependencies.Build.Build.outputs['ProduceVar.VERSION'] ]
   parameters:
     Project: ephemeral_env_dev
     Language: typescript
@@ -103,7 +103,7 @@ stages:
     CDKPath: infra
     OnDemandTestEnv: true
     Environment: test
-    Version: $[ stageDependencies.Build.Build.outputs['ProduceVar.VERSION'] ]
+    Version: $(VERSION)
       
     
       
