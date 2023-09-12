@@ -99,7 +99,7 @@ stages:
       displayName: PublishArtifact
       inputs:
         targetPath: '$(Build.SourcesDirectory)'
-        artifactName: ${{ parameters.Project }}   
+        artifactName: '${{ parameters.Project }}-Build'   
    
 
 - template: templates/ci_cd.yaml@cdk_pipelines  # Template reference 
