@@ -86,7 +86,7 @@ stages:
         script: |
           TAG=$( git tag | tail -1)
           echo "##vso[task.setvariable variable=VERSION;isOutput=true;]$TAG"
-          echo "The variable VERSION is: " $(VERSION)
+          echo "The variable VERSION is: " $TAG
             
    
 
