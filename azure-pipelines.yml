@@ -101,7 +101,7 @@ stages:
     CDKPath: infra
     OnDemandTestEnv: true
     Environment: test
-    Version: $[ stageDependencies.Build.Build.outputs['ProduceVar.VERSION'] ]
+    Version: $[ dependencies.Build.outputs['Build.ProduceVar.VERSION'] ]
       
     
       
