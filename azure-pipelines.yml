@@ -114,6 +114,7 @@ stages:
     OnDemandTestEnv: true
     Environment: test
     Checkout: none
+    ECSDeployment: yes
       
     
       
