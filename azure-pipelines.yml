@@ -79,14 +79,14 @@ stages:
         AWS_ACCOUNT_ID: $(shared_account)
         AWS_DEFAULT_REGION:  $(shared_account_region)
 
-     - task: Bash@3
-       name: ProduceVar
-       inputs:
-        targetType: 'inline'
-        script: |
-          TAG=$( git tag | tail -1)
-          echo "##vso[task.setvariable variable=VERSION;isOutput=true;]$TAG"
-          echo "The variable VERSION is: " $(VERSION)
+    - task: Bash@3
+      name: ProduceVar
+      inputs:
+      targetType: 'inline'
+      script: |
+        TAG=$( git tag | tail -1)
+        echo "##vso[task.setvariable variable=VERSION;isOutput=true;]$TAG"
+        echo "The variable VERSION is: " $(VERSION)
           
    
 
