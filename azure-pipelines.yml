@@ -62,7 +62,7 @@ stages:
         inlineScript: |      
         
             echo Logging in to Amazon ECR...  $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION 
-            export TAG=$( git tag | tail -1)
+            export TAG=$( VERSION_COMMAND )
             echo $TAG
             docker build -t complimentgeneralapi:$TAG .
             docker images
