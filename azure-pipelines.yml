@@ -35,6 +35,7 @@ variables:
   - group: 'ephemeral_envrionments_demo'
 
 
+
 stages:
 - stage: Build
   displayName: Build image
@@ -52,6 +53,7 @@ stages:
 #        tags: |
 #          '$(Build.BuildId)'
     - task: AWSShellScript@1
+      name: dockerBuild
       inputs:
         awsCredentials: ${{ parameters.ServiceConnection }}
         regionName: ${{ parameters.RegionName }}
@@ -88,6 +90,8 @@ stages:
     CDKPath: infra
     OnDemandTestEnv: true
     Environment: test
+    Version: $[ stageDependencies.Build.Build.outputs['dockerBuild.TAG'] ]
+      
     
       
     
