@@ -78,8 +78,6 @@ stages:
 
 
 - template: templates/ci_cd.yaml@cdk_pipelines  # Template reference 
-  variables:
-    - template: common/set_env_vars_params.yml@cdk_pipelines   # Template reference 
   parameters:
     Project: ephemeral_env_dev
     Language: typescript
