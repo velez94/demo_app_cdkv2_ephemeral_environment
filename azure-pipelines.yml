@@ -106,16 +106,16 @@ stages:
   parameters:
     Project: ephemeral_env_dev
     Language: typescript
-    Action: destroy
+    Action: deploy
     ServiceConnection: EphemeralEnvDeployment
     PrivateRepository: true
     AzureCustomFeed: a3dfeb18-d0fc-4033-99ae-50b8d724527b
     CDKPath: infra
     OnDemandTestEnv: true
-    Environment: test
+    Environment: dev
     Checkout: none
     ECSDeployment: yes
-      
+
     
       
     
