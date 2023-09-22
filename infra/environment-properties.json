@@ -48,20 +48,6 @@
       "service_discovery_name": "backend"
      
     }
-  }, 
-  {
-    "name": "frontend",
-    "inputs": {
-      "alb_port": 3000,
-      "port": 3000,
-      "desired_count": 1,
-      "task_size": "x-small",
-      "image": "public.ecr.aws/aws-containers/ecsdemo-frontend:776fd50",
-      "load_balanced": true,
-      "load_balanced_public": true,
-      "service_discovery_name": "frontend"
-     
-    }
   }
 ]
 }
