@@ -100,7 +100,7 @@ stages:
   parameters:
     Project: ephemeral_env_dev
     Language: typescript
-    Action: deploy
+    Action: destroy
     ServiceConnection: EphemeralEnvDeployment
     PrivateRepository: true
     AzureCustomFeed: a3dfeb18-d0fc-4033-99ae-50b8d724527b
@@ -110,19 +110,7 @@ stages:
     Checkout: none
     ECSDeployment: yes
 
-- template: templates/ci_cd.yaml@cdk_pipelines  # Template reference 
-  parameters:
-    Project: ephemeral_env_dev
-    Language: typescript
-    Action: destroy #deploy
-    ServiceConnection: EphemeralEnvDeployment
-    PrivateRepository: true
-    AzureCustomFeed: a3dfeb18-d0fc-4033-99ae-50b8d724527b
-    CDKPath: infra
-    OnDemandTestEnv: true
-    Environment: prod
-    Checkout: none
-    ECSDeployment: yes
+
     
       
     
