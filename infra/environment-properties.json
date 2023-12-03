@@ -6,7 +6,6 @@
     "outputs": {
       "ParentEnv": "cdk-ecs-env-demo",
       "ECSClusterSecGrps": "[]",
-      "VPCId": "vpc-05e1c60727fcb9c91",
       "ECSClusterSDNamespace": "ecs-cdk-demo.dev"
     }
   },
