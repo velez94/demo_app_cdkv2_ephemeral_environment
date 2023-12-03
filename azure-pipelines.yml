@@ -7,18 +7,39 @@ parameters:
   type: string
   default: EphemeralEnvDeployment
 
+
 - name: RegionName
   type: string
   default: us-east-2
 
+- name: OnDemandTestEnv
+  type: boolean
+  default: false
+
+- name: Project
+  type: string
+  default: ephemeral_env_dev
+
+
 trigger:
-- main
+ branches:
+    include:
+    - main
+    - releases/*
+    - feature/*
+    exclude:
+    - releases/old*
+    - feature/*-working
 
 resources:
-- repo: self
+  repositories:
+      - repository: cdk_pipelines
+        type: git
+        name: DevSecOps/cdk_pipelines
 
 variables:
   - group: 'ephemeral_envrionments_demo'
+
 
 
 stages:
@@ -30,29 +51,26 @@ stages:
     pool:
       name: DevSecOpsEphemeralEnvironments
     steps:
-#    - task: Docker@2
-#      displayName: Build an image
-#      inputs:
-#        command: build
-#        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-#        tags: |
-#          '$(Build.BuildId)'
+
     - task: AWSShellScript@1
+      name: AWSECRPublish
       inputs:
         awsCredentials: ${{ parameters.ServiceConnection }}
         regionName: ${{ parameters.RegionName }}
         scriptType: 'inline'
+        workingDirectory: app
         inlineScript: |      
         
             echo Logging in to Amazon ECR...  $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION 
-            TAG=$( git tag | tail -1)
+            export TAG=$( git tag | tail -1)
             echo $TAG
             docker build -t complimentgeneralapi:$TAG .
             docker images
             echo complimentgeneralapi:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/complimentgeneralapi:$TAG
             docker tag complimentgeneralapi:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/complimentgeneralapi:$TAG
             docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/complimentgeneralapi:$TAG
-
+           
+           
             #  aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com &
            
 
@@ -61,4 +79,38 @@ stages:
         AWS_ACCOUNT_ID: $(shared_account)
         AWS_DEFAULT_REGION:  $(shared_account_region)
 
+    - task: Bash@3
+      name: ProduceVar
+      inputs:
+        targetType: 'inline'
+        script: |
+          TAG=$( git tag | tail -1)
+          echo "##vso[task.setvariable variable=VERSION;isOutput=true;]$TAG"
+          echo $TAG > version.txt
+          echo "The variable VERSION is: " $TAG
+    # Publish Package
+    - task: PublishPipelineArtifact@1
+      displayName: PublishArtifact
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)'
+        artifactName: '${{ parameters.Project }}-Build'   
+   
+
+- template: templates/ci_cd.yaml@cdk_pipelines  # Template reference 
+  parameters:
+    Project: ephemeral_env_dev
+    Language: typescript
+    Action: deploy
+    ServiceConnection: EphemeralEnvDeployment
+    PrivateRepository: true
+    AzureCustomFeed: a3dfeb18-d0fc-4033-99ae-50b8d724527b
+    CDKPath: infra
+    OnDemandTestEnv: true
+    Environment: dev
+    Checkout: none
+    ECSDeployment: yes
+
+
+    
+      
     
