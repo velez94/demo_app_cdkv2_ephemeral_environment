@@ -23,5 +23,5 @@ stages:
     Language: typescript
     Action: deploy
     ServiceConnection: EphemeralEnvDeployment
-    PrivateRepository: false
+    PrivateRepository: true
     AzureCustomFeed: a3dfeb18-d0fc-4033-99ae-50b8d724527b
